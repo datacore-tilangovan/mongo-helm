@@ -22,6 +22,13 @@ mongoclient:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
+ycsb:
+  name: ycsb
+  image:
+    repository: thulaseebyt
+    name: ycsb
+    pullPolicy: IfNotPresent
+    tag: "latest"
 storage:
   pvcname: mongo-data
   storageClass: mayastor-1 #Storageclass name
