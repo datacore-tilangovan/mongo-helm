@@ -5,9 +5,11 @@
 #replicaCount: 1 #default replica count for standalone=1 & ha=3
 
 standalone:      #Creates standalone deployment
-  enabled: true
-ha:              #Creates HA statefulset
   enabled: false
+ha:              #Creates HA statefulset
+  enabled: true
+
+#############################IMAGE SECTION#########################################
 
 image:
   repository: mongo
@@ -15,13 +17,34 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
+############################HA STATEFULSET SECTION################################
+
+statefulset:
+  name: mongod                  #Statefulset name
+  volume: 20Gi                  #PVC Volume size
+  secrets:
+    name: secrets               #Secret Name
+    username: admin             #DB User Name
+    password: admin             #DB Password
+  service:
+    name: mongodb-service       #headless Service Name
+    port: 27017                 #headles service Port
+    type: ClusterIP             #headless service type
+  multireplica:                       # Statefulset with replicas mayastor Volume
+    enabled: true
+    scname: mayastor-3           #Three replica sc name
+
+#############################################MONGO CLIENT SECTION####################################
+
 mongoclient:
-  name: mongo-client
+  name: mongo-client            #Mongo Client deployment name
   image:
     repository: mongo
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
+#############################################YCSB SECTION########################################
+
 ycsb:
   name: ycsb
   image:
@@ -29,11 +52,15 @@ ycsb:
     name: ycsb
     pullPolicy: IfNotPresent
     tag: "latest"
-storage:
-  pvcname: mongo-data
-  storageClass: mayastor-1 #Storageclass name
-  size: 20Gi #pvc size
+
+###########################################STANDALONE STORAGE SECTION######################################
+    
+storage:                        #Storage section for standalone
+  pvcname: mongo-data           # PVC name
+  storageClass: mayastor-1      #Storageclass name
+  size: 20Gi                    #pvc size
   accessmode: ReadWriteOnce
+########################################STANDALONE SECRETS SECTION############################################
 
 secrets:
   name: mongo-creds
