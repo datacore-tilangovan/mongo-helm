@@ -72,7 +72,7 @@ spec:
         {{ if .Values.statefulset.multireplica.enabled }}
         volume.beta.kubernetes.io/storage-class: {{ .Values.statefulset.multireplica.scname }}
         {{ else }}
-        volume.beta.kubernetes.io/storage-class: mayastor-1 
+        volume.beta.kubernetes.io/storage-class: {{ .Values.statefulset.singlereplica.scname }}
         {{ end }}
       creationTimestamp: null
       name: mongodb-persistent-storage-claim

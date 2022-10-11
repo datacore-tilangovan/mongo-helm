@@ -30,9 +30,14 @@ statefulset:
     name: mongodb-service       #headless Service Name
     port: 27017                 #headles service Port
     type: ClusterIP             #headless service type
-  multireplica:                       # Statefulset with replicas mayastor Volume
-    enabled: true
-    scname: mayastor-3           #Three replica sc name
+
+###########################MAYASTOR VOLUME REPLICA SECTION############################################
+
+  singlereplica:                      # Single replica mayastor Volume
+    scname: mayastor-1                # Single replica sc name
+  multireplica:                       # Multi replicas mayastor Volume
+    enabled: false
+    scname: mayastor-3                #Three replica sc name
 
 #############################################MONGO CLIENT SECTION####################################
 
@@ -57,7 +62,6 @@ ycsb:
     
 storage:                        #Storage section for standalone
   pvcname: mongo-data           # PVC name
-  storageClass: mayastor-1      #Storageclass name
   size: 20Gi                    #pvc size
   accessmode: ReadWriteOnce
 ########################################STANDALONE SECRETS SECTION############################################

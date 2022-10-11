@@ -9,5 +9,9 @@ spec:
   resources:
     requests:
       storage: {{ .Values.storage.size }}
-  storageClassName: {{ .Values.storage.storageClass }}
+  {{ if .Values.statefulset.multireplica.enabled }}
+  storageClassName: {{ .Values.statefulset.multireplica.scname }}
+  {{ else }}
+  storageClassName: {{ .Values.statefulset.singlereplica.scname }}
+  {{ end }}
 {{- end }}
