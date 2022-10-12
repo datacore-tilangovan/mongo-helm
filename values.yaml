@@ -5,9 +5,9 @@
 #replicaCount: 1 #default replica count for standalone=1 & ha=3
 
 standalone:      #Creates standalone deployment
-  enabled: false
-ha:              #Creates HA statefulset
   enabled: true
+ha:              #Creates HA statefulset
+  enabled: false
 
 #############################IMAGE SECTION#########################################
 
