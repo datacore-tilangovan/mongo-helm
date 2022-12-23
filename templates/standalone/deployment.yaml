@@ -4,11 +4,13 @@ kind: Deployment
 metadata:
   name: {{ include "mongo.fullname" . }}
   labels:
+    role: mongo
     {{- include "mongo.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
+      role: mongo
       {{- include "mongo.selectorLabels" . | nindent 6 }}
   template:
     metadata:
@@ -17,6 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        role: mongo
         {{- include "mongo.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -52,6 +55,9 @@ spec:
           volumeMounts:
           - name: "mongo-data-dir"
             mountPath: "/data/db"
+      nodeSelector:
+        kubernetes.io/arch: amd64
+        openebs.io/engine: mayastor
       volumes:
       - name: "mongo-data-dir"
         persistentVolumeClaim:

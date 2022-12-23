@@ -5,7 +5,7 @@
 #replicaCount: 1 #default replica count for standalone=1 & ha=3
 
 standalone:      #Creates standalone deployment
-  enabled: true
+  enabled: false
 ha:              #Creates HA statefulset
   enabled: false
 
@@ -34,10 +34,10 @@ statefulset:
 ###########################MAYASTOR VOLUME REPLICA SECTION############################################
 
   singlereplica:                      # Single replica mayastor Volume
-    scname: mayastor-1                # Single replica sc name
+    scname:                 # Single replica sc name
   multireplica:                       # Multi replicas mayastor Volume
     enabled: false
-    scname: mayastor-3                #Three replica sc name
+    scname:                 #Three replica sc name
 
 #############################################MONGO CLIENT SECTION####################################
 
